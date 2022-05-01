@@ -1,17 +1,12 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import "./App.scss";
-import movieAction from "./redux/actions/movieAction";
+import Home from "./pages/Home";
 
 function App() {
-  const dispatch = useDispatch();
-  const { upcomingMovies } = useSelector((state) => state.movieReducer);
-
-  useEffect(() => {
-    dispatch(movieAction());
-  }, [dispatch]);
-  console.log(upcomingMovies);
-  return <>asd</>;
+  return (
+    <>
+      <Home />
+    </>
+  );
 }
 
 export default App;
