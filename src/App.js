@@ -1,10 +1,13 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.scss";
 import Home from "./pages/Home";
 
 function App() {
   return (
     <>
-      <Home />
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
     </>
   );
 }
