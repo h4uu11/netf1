@@ -56,22 +56,38 @@ const tvAll = () => {
     });
   };
 };
-const videoOne = (videoType, id) => {
+const videoDetail = (videoType, id) => {
   return async (dispatch, getState) => {
-    const vedeoApi = api.get(
+    const vedeoDetailApi = api.get(
       `${videoType}/${id})?api_key=${API_KEY}&language=en-US`
     );
-    const [video] = await Promise.all([vedeoApi]);
+    const [videoDetail] = await Promise.all([vedeoDetailApi]);
     dispatch({
-      type: "VIDEO_SUCCESS",
+      type: "VIDEO_DETAIL_SUCCESS",
       payload: {
-        video: video.data,
+        videoDetail: videoDetail.data,
       },
     });
   };
 };
+const videoRecommend = (videoType, id) => {
+  return async (dispatch, getState) => {
+    const vedeoRecommendApi = api.get(
+      `${videoType}/${id})/recommendations?api_key=${API_KEY}&language=en-US&page=1`
+    );
+    const [videoRecommend] = await Promise.all([vedeoRecommendApi]);
+    dispatch({
+      type: "VIDEO_RECOMMEND_SUCCESS",
+      payload: {
+        videoRecommend: videoRecommend.data.results,
+      },
+    });
+  };
+};
+
 export const movieAction = {
   movieAll,
   tvAll,
-  videoOne,
+  videoDetail,
+  videoRecommend,
 };

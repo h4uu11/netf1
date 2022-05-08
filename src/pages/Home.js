@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import SubVisual from "../components/SubVisual";
 import { movieAction } from "../redux/actions/movieAction";
 
@@ -14,6 +15,11 @@ const Home = () => {
     popularTvs,
   } = useSelector((state) => state.movieReducer);
 
+  const navigate = useNavigate();
+
+  const goLink = (videoType, id) => {
+    navigate(`/${videoType}/${id}`);
+  };
   useEffect(() => {
     dispatch(movieAction.movieAll());
     dispatch(movieAction.tvAll());
@@ -26,16 +32,22 @@ const Home = () => {
         className="mainVisual"
         style={{
           backgroundImage: `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${
-            popularMovies[0] && popularMovies[0].backdrop_path
+            upcomingMovies[0] && upcomingMovies[0].backdrop_path
           })`,
         }}
       >
         <div className="inner">
           <div className="title">
-            {popularMovies[0] && popularMovies[0].title}
+            {upcomingMovies[0] && upcomingMovies[0].title}
           </div>
           <div className="overview">
-            {popularMovies[0] && popularMovies[0].overview}
+            {upcomingMovies[0] && upcomingMovies[0].overview}
+          </div>
+          <div className="btnWrap">
+            <button>Trailer</button>
+            <button onClick={() => goLink("movie", upcomingMovies[0].id)}>
+              More Info
+            </button>
           </div>
         </div>
       </div>

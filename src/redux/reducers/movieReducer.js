@@ -5,7 +5,8 @@ const init = {
   onTheAirTvs: [],
   topRatedTvs: [],
   popularTvs: [],
-  videoOne: [],
+  videoDetail: [],
+  videoRecommend: [],
 };
 
 const movieReducer = (state = init, action) => {
@@ -24,10 +25,15 @@ const movieReducer = (state = init, action) => {
         topRatedTvs: action.payload.topRated,
         popularTvs: action.payload.popular,
       };
-    case "VIDEO_SUCCESS":
+    case "VIDEO_DETAIL_SUCCESS":
       return {
         ...state,
-        videoOne: action.payload.video,
+        videoDetail: action.payload.videoDetail,
+      };
+    case "VIDEO_RECOMMEND_SUCCESS":
+      return {
+        ...state,
+        videoRecommend: action.payload.videoRecommend,
       };
 
     default:
