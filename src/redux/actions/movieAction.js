@@ -84,10 +84,25 @@ const videoRecommend = (videoType, id) => {
     });
   };
 };
+const videoYoutube = (videoType, id) => {
+  return async (dispatch, getState) => {
+    const videoYoutubeApi = api.get(
+      `${videoType}/${id})/videos?api_key=${API_KEY}&language=en-US&page=1`
+    );
+    const [videoYoutube] = await Promise.all([videoYoutubeApi]);
+    dispatch({
+      type: "VIDEO_YOUTUBE_SUCCESS",
+      payload: {
+        videoYoutube: videoYoutube.data.results,
+      },
+    });
+  };
+};
 
 export const movieAction = {
   movieAll,
   tvAll,
   videoDetail,
   videoRecommend,
+  videoYoutube,
 };

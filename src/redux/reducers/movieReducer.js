@@ -7,6 +7,7 @@ const init = {
   popularTvs: [],
   videoDetail: [],
   videoRecommend: [],
+  videoYoutube: [],
 };
 
 const movieReducer = (state = init, action) => {
@@ -34,6 +35,11 @@ const movieReducer = (state = init, action) => {
       return {
         ...state,
         videoRecommend: action.payload.videoRecommend,
+      };
+    case "VIDEO_YOUTUBE_SUCCESS":
+      return {
+        ...state,
+        videoYoutube: action.payload.videoYoutube,
       };
 
     default:

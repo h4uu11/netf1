@@ -2,6 +2,10 @@
 * {
   box-sizing: border-box;
 }
+@mixin innerW() {
+  padding-left: 40px;
+  padding-right: 40px;
+}
 html {
   scroll-behavior: smooth;
 }
@@ -22,6 +26,7 @@ a {
 }
 .btnWrap {
   margin-top: 20px;
+  display: flex;
   button {
     width: 130px;
     height: 40px;
@@ -32,11 +37,17 @@ a {
     cursor: pointer;
     font-size: 16px;
     transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     &:hover {
       background-color: rgba(255, 255, 255, 0.7);
     }
     &:last-child {
       margin-right: 0;
+    }
+    svg {
+      margin-right: 5px;
     }
   }
 }
@@ -79,10 +90,32 @@ body {
 .swiper-button-prev.swiper-button-disabled {
   opacity: 0;
 }
-@mixin innerW() {
-  padding-left: 40px;
-  padding-right: 40px;
+.modal {
+  .inner {
+    @include innerW();
+    width: 100%;
+    max-width: 1400px;
+    height: 850px;
+    color: #111;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    .btnClose {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      color: #fff;
+      cursor: pointer;
+      font-size: 30px;
+    }
+    .youtube {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
+
 .header {
   @include innerW();
   padding-top: 30px;

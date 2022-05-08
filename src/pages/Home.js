@@ -1,8 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SubVisual from "../components/SubVisual";
 import { movieAction } from "../redux/actions/movieAction";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import InfoIcon from "@mui/icons-material/Info";
+import Modal from "@mui/material/Modal";
+import CloseIcon from "@mui/icons-material/Close";
+import YouTube from "react-youtube";
+import YoutubeModal from "../components/YoutubeModal";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -13,6 +19,7 @@ const Home = () => {
     onTheAirTvs,
     topRatedTvs,
     popularTvs,
+    videoYoutube,
   } = useSelector((state) => state.movieReducer);
 
   const navigate = useNavigate();
@@ -20,10 +27,18 @@ const Home = () => {
   const goLink = (videoType, id) => {
     navigate(`/${videoType}/${id}`);
   };
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    dispatch(movieAction.videoYoutube("movie", upcomingMovies[0].id));
+    setOpen(true);
+  };
+
   useEffect(() => {
     dispatch(movieAction.movieAll());
     dispatch(movieAction.tvAll());
   }, [dispatch]);
+
   return (
     /* https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/1uegR4uAxRxiMyX4nQnpzbXhrTw.jpg */
     /* https://www.themoviedb.org/t/p/w600_and_h900_bestv2/h9fjtMeoaI3LrW8avMZoJPoniLZ.jpg */
@@ -44,9 +59,11 @@ const Home = () => {
             {upcomingMovies[0] && upcomingMovies[0].overview}
           </div>
           <div className="btnWrap">
-            <button>Trailer</button>
+            <button onClick={handleOpen}>
+              <PlayArrowIcon /> Trailer
+            </button>
             <button onClick={() => goLink("movie", upcomingMovies[0].id)}>
-              More Info
+              <InfoIcon /> More Info
             </button>
           </div>
         </div>
@@ -77,6 +94,7 @@ const Home = () => {
           <SubVisual content={topRatedMovies} videoType="movie" />
         </div>
       </div>
+      <YoutubeModal setOpen={setOpen} open={open} videoYoutube={videoYoutube} />
     </>
   );
 };
