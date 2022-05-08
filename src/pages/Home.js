@@ -1,37 +1,71 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import SubVisual from "../components/SubVisual";
 import { movieAction } from "../redux/actions/movieAction";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { popularTvs } = useSelector((state) => state.movieReducer);
+  const {
+    upcomingMovies,
+    popularMovies,
+    topRatedMovies,
+    onTheAirTvs,
+    topRatedTvs,
+    popularTvs,
+  } = useSelector((state) => state.movieReducer);
 
   useEffect(() => {
     dispatch(movieAction.movieAll());
     dispatch(movieAction.tvAll());
   }, [dispatch]);
-
   return (
     /* https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/1uegR4uAxRxiMyX4nQnpzbXhrTw.jpg */
     /* https://www.themoviedb.org/t/p/w600_and_h900_bestv2/h9fjtMeoaI3LrW8avMZoJPoniLZ.jpg */
-    <div>
-      <div>
-        <img
-          src={`https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${
-            popularTvs.results && popularTvs.results[0].backdrop_path
-          }`}
-          alt=""
-        />
+    <>
+      <div
+        className="mainVisual"
+        style={{
+          backgroundImage: `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${
+            popularMovies[0] && popularMovies[0].backdrop_path
+          })`,
+        }}
+      >
+        <div className="inner">
+          <div className="title">
+            {popularMovies[0] && popularMovies[0].title}
+          </div>
+          <div className="overview">
+            {popularMovies[0] && popularMovies[0].overview}
+          </div>
+        </div>
       </div>
-      {popularTvs.results &&
-        popularTvs.results.map((item, index) => (
-          <img
-            key={index}
-            src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2${item.poster_path}`}
-            alt=""
-          />
-        ))}
-    </div>
+      <div className="subVisual">
+        <div className="item">
+          <div className="title">Popular Movies</div>
+          <SubVisual content={popularMovies} videoType="movie" />
+        </div>
+        <div className="item">
+          <div className="title">Currently Airing TV Shows</div>
+          <SubVisual content={onTheAirTvs} videoType="tv" />
+        </div>
+        <div className="item">
+          <div className="title">Upcoming Movies</div>
+          <SubVisual content={upcomingMovies} videoType="movie" />
+        </div>
+        <div className="item">
+          <div className="title">Popular TV Shows</div>
+          <SubVisual content={popularTvs} videoType="tv" />
+        </div>
+        <div className="item">
+          <div className="title">Top Rated TV Shows</div>
+          <SubVisual content={topRatedTvs} videoType="tv" />
+        </div>
+        <div className="item">
+          <div className="title">Top Rated Movies</div>
+          <SubVisual content={topRatedMovies} videoType="movie" />
+        </div>
+      </div>
+    </>
   );
 };
 

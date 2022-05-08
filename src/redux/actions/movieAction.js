@@ -25,9 +25,9 @@ const movieAll = () => {
     dispatch({
       type: "MOVIE_SUCCESS",
       payload: {
-        upcoming: upcoming.data,
-        topRated: topRated.data,
-        popular: popular.data,
+        upcoming: upcoming.data.results,
+        topRated: topRated.data.results,
+        popular: popular.data.results,
       },
     });
   };
@@ -49,9 +49,23 @@ const tvAll = () => {
     dispatch({
       type: "TV_SUCCESS",
       payload: {
-        onTheAir: onTheAir.data,
-        popular: popular.data,
-        topRated: topRated.data,
+        onTheAir: onTheAir.data.results,
+        popular: popular.data.results,
+        topRated: topRated.data.results,
+      },
+    });
+  };
+};
+const videoOne = (videoType, id) => {
+  return async (dispatch, getState) => {
+    const vedeoApi = api.get(
+      `${videoType}/${id})?api_key=${API_KEY}&language=en-US`
+    );
+    const [video] = await Promise.all([vedeoApi]);
+    dispatch({
+      type: "VIDEO_SUCCESS",
+      payload: {
+        video: video.data,
       },
     });
   };
@@ -59,4 +73,5 @@ const tvAll = () => {
 export const movieAction = {
   movieAll,
   tvAll,
+  videoOne,
 };
